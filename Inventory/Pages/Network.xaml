@@ -1,0 +1,56 @@
+﻿<Page x:Class="Inventory.Pages.Network"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Inventory.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Network">
+
+
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Левая часть с полями ввода данных -->
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="10">
+                <TextBlock Text="Поиск:"/>
+                <TextBox Name="searc" Style="{StaticResource PrimaryTextBox}" TextChanged="searc_TextChanged"/>
+                <Label Padding="10"></Label>
+                <TextBlock Text="Ip:"/>
+                <TextBox Name="ipAddressTextBox" PreviewTextInput="ipAddressTextBox_PreviewTextInput" PreviewKeyDown="ipAddressTextBox_PreviewKeyDown" Style="{StaticResource PrimaryTextBox}" />
+                <TextBlock Text="Маска подсети:"/>
+                <TextBox Name="MaskTextBox" PreviewTextInput="MaskTextBox_PreviewTextInput" PreviewKeyDown="MaskTextBox_PreviewKeyDown" Style="{StaticResource PrimaryTextBox}"/>
+                <TextBlock Text="Главный шлюз:"/>
+                <TextBox Name="GetwayTextBox" PreviewTextInput="GetwayTextBox_PreviewTextInput" PreviewKeyDown="GetwayTextBox_PreviewKeyDown" Style="{StaticResource PrimaryTextBox}"/>
+                <TextBlock Text="DNS:"/>
+                <TextBox Name="DnsTextBox" PreviewTextInput="DnsTextBox_PreviewTextInput" PreviewKeyDown="DnsTextBox_PreviewKeyDown" Style="{StaticResource PrimaryTextBox}"/>
+                <Button Content="Добавить днс" Click="AddEquipmentButton_Click"/>
+                <Button Content="Удалить выбранный днс" Click="RemoveEquipmentButton_Click"/>
+
+                <ListBox Name="EquipmentListBox">
+                    <!-- Ваш код элементов ListBox здесь -->
+                </ListBox>
+                <Button Style="{StaticResource PrimaryButton}" Content="Добавить" Margin="0 5" Click="AddButton_Click"/>
+                <Button Style="{StaticResource SecondButton}" Content="Изменить" Margin="0 5" Click="EditButton_Click"/>
+                <Button Style="{StaticResource PrimaryButton}" Content="Удалить" Margin="0 5" Click="RemoveButton_Click" Background="#E41613"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <ListView Grid.Column="1" Name="NetworkListView" Margin="10" ItemsSource="{Binding NetworkList}" SelectionChanged="NetworkListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Ip" DisplayMemberBinding="{Binding Ip}"/>
+                    <GridViewColumn Header="Маска подсети" DisplayMemberBinding="{Binding Mask}"/>
+                    <GridViewColumn Header="Главный шлюз" DisplayMemberBinding="{Binding Gateway}"/>
+                    <GridViewColumn Header="DNS" DisplayMemberBinding="{Binding Dns}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>

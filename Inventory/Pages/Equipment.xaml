@@ -1,0 +1,144 @@
+﻿<Page x:Class="Inventory.Pages.Equipment"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Inventory.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Equipment">
+
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Левая часть с полями ввода данных -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Grid.Column="0" Margin="10">
+                <TextBlock Text="Поиск:"/>
+                <TextBox Name="SearchTextBox" Style="{StaticResource PrimaryTextBox}" TextChanged="SearchTextBox_TextChanged"/>
+
+                <TextBlock Text="Сортировка:"/>
+                <ComboBox x:Name="SortComboBox" Style="{StaticResource ComboBoxStyle}" Margin="0 0 0 30" SelectionChanged="SortComboBox_SelectionChanged">
+                    <ComboBoxItem>По возрастанию</ComboBoxItem>
+                    <ComboBoxItem>По убыванию</ComboBoxItem>
+                </ComboBox>
+
+                <TextBlock Text="Название оборудования:"/>
+                <TextBox Name="EquipmentNameTextBox" Style="{StaticResource PrimaryTextBox}"/>
+
+                <TextBlock Text="Фотография оборудования:"/>
+                <Image Name="EquipmentThumbnail" Width="50" Height="50" Stretch="Uniform" Margin="15"/>
+                <Button Name="UploadPhotoButton" Content="Загрузить фото" Click="UploadPhotoButton_Click" Style="{StaticResource SecondButton}"/>
+
+                <TextBlock Text="Инвентарный номер оборудования:"/>
+                <TextBox Name="InventoryNumberTextBox" Style="{StaticResource PrimaryTextBox}" PreviewTextInput="InventoryNumberTextBox_PreviewTextInput" TextChanged="InventoryNumberTextBox_TextChanged"/>
+
+                <TextBlock Text="Аудитория:"/>
+                <ComboBox Name="AuditoriumComboBox" Style="{StaticResource ComboBoxStyle}">
+
+                </ComboBox>
+
+                <TextBlock Text="Ответственный пользователь:"/>
+                <ComboBox Name="ResponsibleUserComboBox" Style="{StaticResource ComboBoxStyle}" SelectionChanged="ResponsibleUserComboBox_SelectionChanged">
+                </ComboBox>
+
+                <TextBlock Text="Временно-ответственный пользователь:"/>
+                <ComboBox Name="TemporaryUserComboBox" Style="{StaticResource ComboBoxStyle}">
+                </ComboBox>
+
+                <TextBlock Text="Стоимость оборудования:"/>
+                <TextBox Name="EquipmentCostTextBox" Style="{StaticResource PrimaryTextBox}" PreviewTextInput="EquipmentCostTextBox_PreviewTextInput"/>
+
+                <TextBlock Text="Направление оборудования:"/>
+                <ComboBox Name="EquipmentDirectionComboBox" Style="{StaticResource ComboBoxStyle}">
+                </ComboBox>
+
+                <TextBlock Text="Статус оборудования:"/>
+                <ComboBox Name="EquipmentStatusComboBox" Style="{StaticResource ComboBoxStyle}">
+                </ComboBox>
+
+                <TextBlock Text="Модель оборудования:"/>
+                <ComboBox Name="EquipmentModelComboBox" Style="{StaticResource ComboBoxStyle}">
+                </ComboBox>
+
+                <TextBlock Text="Комментарий:"/>
+                <TextBox Name="EquipmentCommentTextBox" Style="{StaticResource PrimaryTextBox}"/>
+                <Button Style="{StaticResource PrimaryButton}" Content="Импортировать" Margin="0 5" Click="Button_Click_1"/>
+                <Button Style="{StaticResource PrimaryButton}" Content="Добавить" Margin="0 5" Click="AddButton_Click"/>
+                <Button Style="{StaticResource SecondButton}" Content="Изменить" Margin="0 5" Click="EditButton_Click"/>
+                <Button Style="{StaticResource PrimaryButton}" Content="Удалить" Margin="0 5" Click="RemoveButton_Click" Background="#E41613"/>
+                <Button Style="{StaticResource PrimaryButton}" Content="Приема-передачи оборудования" Margin="0 5" Click="Button_Click"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ListView Grid.Row="0" Name="EquipmentListView" Margin="10,10,10,10" ItemsSource="{Binding EquipmentList}" SelectionChanged="EquipmentListView_SelectionChanged" Grid.RowSpan="2">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Название" DisplayMemberBinding="{Binding EquipmentName}"/>
+                        <GridViewColumn Header="Фото">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Width="50" Height="50" Stretch="Uniform" Source="{Binding EquipmentImage}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Инвентарный номер" DisplayMemberBinding="{Binding InventoryNumber}"/>
+                        <GridViewColumn Header="Аудитория" DisplayMemberBinding="{Binding Auditorium}"/>
+                        <GridViewColumn Header="Ответственный" DisplayMemberBinding="{Binding ResponsibleUser}"/>
+                        <GridViewColumn Header="Временно-ответственный" DisplayMemberBinding="{Binding TemporaryUser}"/>
+                        <GridViewColumn Header="Стоимость" DisplayMemberBinding="{Binding EquipmentCost}"/>
+                        <GridViewColumn Header="Направление" DisplayMemberBinding="{Binding EquipmentDirection}"/>
+                        <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding EquipmentStatus}"/>
+                        <GridViewColumn Header="Модель" DisplayMemberBinding="{Binding EquipmentType}"/>
+                        <GridViewColumn Header="Комментарий" DisplayMemberBinding="{Binding EquipmentComment}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Visibility="Hidden" Orientation="Vertical" Margin="0,0,10,0">
+                    <Label Content="История аудиторий" Width="117" />
+                    <ListView Name="historyAud" Margin="10" ItemsSource="{Binding EquipmentList}" SelectionChanged="EquipmentListView_SelectionChanged" Height="156" Width="245">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Название" DisplayMemberBinding="{Binding EquipmentName}"/>
+                                <GridViewColumn Header="Инвентарный номер" DisplayMemberBinding="{Binding InventoryNumber}"/>
+                                <GridViewColumn Header="Аудитория" DisplayMemberBinding="{Binding Auditorium}"/>
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+
+                <StackPanel Visibility="Hidden" Orientation="Vertical" Margin="270,0,10,0" Grid.ColumnSpan="2">
+                    <Label Content="История ответственных" Width="142" />
+                    <ListView Margin="10" Name="historyUser" ItemsSource="{Binding EquipmentList}" SelectionChanged="EquipmentListView_SelectionChanged" Height="156" Width="250">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Инвен.номер" Width="75" DisplayMemberBinding="{Binding InventoryNumber}"/>
+                                <GridViewColumn Header="Ответственный" DisplayMemberBinding="{Binding ResponsibleUser}"/>
+                                <GridViewColumn Header="Комментарий" DisplayMemberBinding="{Binding EquipmentComment}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Page>

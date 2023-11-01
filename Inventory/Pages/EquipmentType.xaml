@@ -1,0 +1,41 @@
+﻿<Page x:Class="Inventory.Pages.EquipmentType"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Inventory.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="EquipmentType">
+
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Левая часть с полями ввода данных -->
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="10">
+                <TextBlock Text="Поиск:"/>
+                <TextBox Name="searc" Style="{StaticResource PrimaryTextBox}" TextChanged="searc_TextChanged"/>
+                <Label Padding="10"></Label>
+                <TextBlock Text="Наименование:"/>
+                    <TextBox Name="EquipmentTypeNameTextBox" Style="{StaticResource PrimaryTextBox}"/>
+
+                    <Button Style="{StaticResource PrimaryButton}" Content="Добавить" Margin="0 5" Click="AddButton_Click"/>
+                    <Button Style="{StaticResource SecondButton}" Content="Изменить" Margin="0 5" Click="EditButton_Click"/>
+                    <Button Style="{StaticResource PrimaryButton}" Content="Удалить" Margin="0 5" Click="RemoveButton_Click" Background="#E41613"/>
+                </StackPanel>
+        </ScrollViewer>
+
+        <ListView Grid.Column="1" Name="EquipmentTypeListView" Margin="10" ItemsSource="{Binding EquipmentTypeList}" SelectionChanged="EquipmentTypeListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="auto" Header="Id" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Width="auto" Header="Наименование" DisplayMemberBinding="{Binding Name}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>

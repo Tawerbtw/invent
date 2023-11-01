@@ -1,0 +1,78 @@
+﻿<Page x:Class="Inventory.Pages.Materials"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Inventory.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Materials">
+
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Левая часть с полями ввода данных -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Grid.Column="0" Margin="10">
+                <TextBlock Text="Поиск:"/>
+                <TextBox Name="searc" Style="{StaticResource PrimaryTextBox}" TextChanged="searc_TextChanged"/>
+                <Label Padding="10"></Label>
+                <TextBlock Text="Название материала:"/>
+                <TextBox Name="NameTextBox" Style="{StaticResource PrimaryTextBox}"/>
+                <TextBlock Text="Описание материала:"/>
+                <TextBox Name="DescriptionTextBox" Style="{StaticResource PrimaryTextBox}"/>
+                <TextBlock Text="Дата материала:"/>
+                <DatePicker Name="DateAdd" />
+
+                <TextBlock Text="Фотография материала:"/>
+                <Image Name="MaterialThumbnail" Width="50" Height="50" Stretch="Uniform" Margin="15"/>
+                <Button Name="UploadPhotoButton" Content="Загрузить фото" Click="UploadPhotoButton_Click" Style="{StaticResource SecondButton}"/>
+
+                <TextBlock Text="Кол-во материала:"/>
+                <TextBox Name="CountTextBox"  PreviewTextInput="MaterialsNumberTextBox_PreviewTextInput" Style="{StaticResource PrimaryTextBox}" />
+
+                <TextBlock Text="Ответственный пользователь:"/>
+                <ComboBox Name="ResponsibleUserComboBox" Style="{StaticResource ComboBoxStyle}">
+                </ComboBox>
+
+                <TextBlock Text="Временно-ответственный пользователь:"/>
+                <ComboBox Name="TemporaryUserComboBox" Style="{StaticResource ComboBoxStyle}">
+                </ComboBox>
+
+                <TextBlock Text="Тип оборудования:"/>
+                <ComboBox Name="TypeComboBox" Style="{StaticResource ComboBoxStyle}">
+                </ComboBox>
+
+                <Button Style="{StaticResource PrimaryButton}" Content="Добавить" Margin="0 5" Click="AddButton_Click"/>
+                <Button Style="{StaticResource SecondButton}" Content="Изменить" Margin="0 5" Click="EditButton_Click"/>
+                <Button Style="{StaticResource PrimaryButton}" Content="Удалить" Margin="0 5" Click="RemoveButton_Click" Background="#E41613"/>
+                <Button Style="{StaticResource PrimaryButton}" Content="Приема-передачи расходных материалов" Margin="0 5" Click="Button_Click_1" />
+            </StackPanel>
+        </ScrollViewer>
+
+        <ListView Grid.Column="1" Name="EquipmentListView" Margin="10" ItemsSource="{Binding EquipmentList}" SelectionChanged="EquipmentListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}"/>
+                    <GridViewColumn Header="Дата поступления" DisplayMemberBinding="{Binding DateAdd}"/>
+                    <GridViewColumn Header="Фото">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Width="50" Height="50" Stretch="Uniform" Source="{Binding Image}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Кол-во" DisplayMemberBinding="{Binding Count}"/>
+                    <GridViewColumn Header="Ответственный" DisplayMemberBinding="{Binding ResponsibleUser}"/>
+                    <GridViewColumn Header="Временно-ответственный" DisplayMemberBinding="{Binding TemporaryUser}"/>
+                    <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding Type}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>
