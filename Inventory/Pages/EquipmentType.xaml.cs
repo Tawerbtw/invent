@@ -35,13 +35,9 @@ namespace Inventory.Pages
             {
                 Name = EquipmentTypeNameTextBox.Text
             };
-
             connection.AddEquipmentType(EquipmentType);
-
             EquipmentTypeList.Add(EquipmentType);
-
             ClearFields();
-
             UpdateTable();
         }
 
